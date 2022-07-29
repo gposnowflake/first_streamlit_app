@@ -3,6 +3,7 @@ import streamlit
 import pandas
 import requests
 import snowflake.connector
+from urllib.error import URLError
 
 #init snowflake connection at the top to be reusable
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
@@ -41,7 +42,10 @@ streamlit.dataframe(fruityvice_normalized)
 add_my_fruit = streamlit.text_input('What fruit would you like to add?')
 streamlit.write('Thanks for adding', add_my_fruit)
 
-#this will not work yet
+# stops executing the rest of the app
+streamlit.stop()
+
+# this will not work yet
 my_cur.execute("insert into fruit_load_list values ('from streamlit')")
 
 my_cur.execute("SELECT * from fruit_load_list")
